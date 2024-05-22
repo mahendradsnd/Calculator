@@ -4,7 +4,6 @@
     <title>JavaScript Calculator</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.js" integrity="sha512-BbVEDjbqdN3Eow8+empLMrJlxXRj5nEitiCAK5A1pUr66+jLVejo3PmjIaucRnjlB0P9R3rBUs3g5jXc8ti+fQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js" integrity="sha512-iphNRh6dPbeuPGIrQbCdbBF/qcqadKWLa35YPVfMZMHBSI6PLJh1om2xCTWhpVpmUyb4IvVS9iYnnYMkleVXLA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <!-- For styling -->
     <style>
         table {
             border: 30px solid rgb(44, 146, 242);
@@ -37,28 +36,24 @@
     </style>
 </head>
 <body>
-    <!-- Use Table to Create Calculator Structure Design -->
     <table id="calcu">
         <tr>
-            <td colspan="10";padding : 2px><input type="text" id="result"  value="0" readonly></td>
-            <tr>
-            <td></td>
+            <td colspan="4">
+                <input type="text" id="result" value="0" readonly>
+            </td>
         </tr>
-        </tr><br>
-         <tr color: red,backgroundcolor :" blue">
-            <td><input type="button" value="/" onclick="Solve('/')"></td><br>
+        <tr>
+            <td><input type="button" value="/" onclick="Solve('/')"></td>
             <td><input type="button" value="*" onclick="Solve('*')"></td>
             <td><input type="button" value="." onclick="Solve('.')"></td>
-            <td><input type="button" value="0" onclick="Solve('0')"></td>
+            <td><input type="button" value="C" onclick="Clear()"></td>
         </tr>
-
-        <tr color: red,backgroundcolor :" blue">
-            <td><input type="button" value="7" onclick="Solve('7')"></td><br>
+        <tr>
+            <td><input type="button" value="7" onclick="Solve('7')"></td>
             <td><input type="button" value="8" onclick="Solve('8')"></td>
             <td><input type="button" value="9" onclick="Solve('9')"></td>
             <td><input type="button" value="+" onclick="Solve('+')"></td>
         </tr>
-        <br><br>
         <tr>
             <td><input type="button" value="4" onclick="Solve('4')"></td>
             <td><input type="button" value="5" onclick="Solve('5')"></td>
@@ -72,29 +67,34 @@
             <td><input type="button" value="=" onclick="Result()"></td>
         </tr>
         <tr>
-            <td></td>
+            <td colspan="4">
+                <input type="button" value="0" onclick="Solve('0')" style="width: calc(100% - 24px);">
+            </td>
         </tr>
     </table>
     <script>
         function Solve(val) {
             var v = document.getElementById('result');
-            if (v.value === '0') {
+            if (v.value === '0' && val !== '.') {
                 v.value = val;
             } else {
                 v.value += val;
             }
         }
+
         function Result() {
-            var num1 = document.getElementById('result').value;
-            var num2 = math.evaluate(num1); // Using math.js for evaluation
-            document.getElementById('result').value = num2;
+            var input = document.getElementById('result').value;
+            var result;
+            try {
+                result = math.evaluate(input);
+            } catch (error) {
+                result = 'Error';
+            }
+            document.getElementById('result').value = result;
         }
+
         function Clear() {
             document.getElementById('result').value = '0';
-        }
-        function Back() {
-            var ev = document.getElementById('result');
-            ev.value = ev.value.slice(0, -1);
         }
     </script>
 </body>
